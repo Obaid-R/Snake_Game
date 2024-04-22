@@ -1,5 +1,7 @@
 from turtle import Screen
 from snake import Snake
+from food import Food
+from scoreboard import Scoreboard
 import time
 
 # Set up screen
@@ -10,6 +12,8 @@ screen.title("Snake Game")
 screen.tracer(0) # Turns off the delay in the turtle animation
 
 snake = Snake()
+food = Food()
+scoreboard = Scoreboard()
 
 # Read in input from the keyboard to move the snake
 screen.listen()
@@ -25,12 +29,21 @@ while program_running:
 
     snake.move()
 
+    # Detect when head of the snake comes in contact with food
+    if snake.head.distance(food) < 20:
+        food.refresh()
+        snake.extend()
+        scoreboard.increase_score()
 
+    # Detect when head of the snake comes in contact with a wall
+    if (snake.head.xcor() > 295 or snake.head.xcor() < -295) or (snake.head.ycor() > 295 or snake.head.ycor() < -295):
+        program_running = False
+        scoreboard.game_over()
 
-
-
-
-
-
+    # Detect when head of the snake comes in contact with the snake body (with the exception of the head itself)
+    for bit in snake.snake_body[1:-1]:
+        if snake.head.distance(bit) < 10:
+            program_running = False
+            scoreboard.game_over()
 
 screen.exitonclick()
