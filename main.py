@@ -37,13 +37,13 @@ while program_running:
 
     # Detect when head of the snake comes in contact with a wall
     if (snake.head.xcor() > 295 or snake.head.xcor() < -295) or (snake.head.ycor() > 295 or snake.head.ycor() < -295):
-        program_running = False
-        scoreboard.game_over()
+        scoreboard.reset()
+        snake.reset_snake()
 
     # Detect when head of the snake comes in contact with the snake body (with the exception of the head itself)
     for bit in snake.snake_body[1:-1]:
         if snake.head.distance(bit) < 10:
-            program_running = False
-            scoreboard.game_over()
+            scoreboard.reset()
+            snake.reset_snake()
 
 screen.exitonclick()

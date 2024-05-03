@@ -25,6 +25,14 @@ class Snake:
         new_bit.goto(position)
         self.snake_body.append(new_bit)
 
+    def reset_snake(self):
+        for bit in self.snake_body:
+            bit.goto(1000, 1000)
+
+        self.snake_body.clear()
+        self.create_snake()
+        self.head = self.snake_body[0]
+
     def extend(self):
         self.add_bit(self.snake_body[-1].position())
 
